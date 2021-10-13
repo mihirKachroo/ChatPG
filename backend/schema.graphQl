@@ -1,0 +1,76 @@
+type User @model {
+  id: ID!
+  username: String!
+  email: String
+  conversations: [ConvoLink] @connection(name: "UserLinks")
+  messages: [Message] @connection(name: "UserMessages")
+  createdAt: String
+  updatedAt: String
+}
+
+type Conversation
+  @model(
+    mutations: {
+      create: "createConvo"
+      update: "updateConvo"
+      delete: "deleteConvo"
+    }
+    queries: { get: "getConvo" }
+    subscriptions: null
+  ) {
+  id: ID!
+  messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
+  associated: [ConvoLink] @connection(name: "AssociatedLinks")
+  name: String!
+  members: [String!]!
+  createdAt: String
+  updatedAt: String
+}
+
+type Message @model(subscriptions: null, queries: null) {
+  id: ID!
+  author: User @connection(name: "UserMessages", keyField: "authorId")
+  authorId: String
+  recieverId: String
+  content: String!
+  file: S3Object
+  conversation: Conversation
+    @connection(name: "ConvoMsgs", sortField: "createdAt")
+  messageConversationId: ID!
+  createdAt: String
+  updatedAt: String
+}
+
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
+
+type ConvoLink
+  @model(
+    mutations: {
+      create: "createConvoLink"
+      update: "updateConvoLink"
+      delete: "deleteConvoLink"
+    }
+    queries: null
+    subscriptions: null
+  ) {
+  id: ID!
+  user: User! @connection(name: "UserLinks")
+  convoLinkUserId: ID
+  conversation: Conversation @connection(name: "AssociatedLinks")
+  convoLinkConversationId: ID!
+  createdAt: String
+  updatedAt: String
+}
+
+type Subscription {
+  onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+    @aws_subscribe(mutations: ["createConvoLink"])
+  onCreateMessage(messageConversationId: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+  onCreateNotification(recieverId: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}
