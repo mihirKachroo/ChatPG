@@ -1,27 +1,27 @@
-.App {
+body {
+  padding-top: 4rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
   text-align: center;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.App {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 56px;
+}
+
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  display: inline-block !important;
 }
 
 .App-link {
@@ -35,4 +35,46 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.section-header {
+  background-color: #e6e6e6;
+  padding: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.chat-message-view-header {
+  background-color: #e6e6e6;
+  padding-top: 13px;
+  padding-bottom: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 -15px 10px -15px;
+}
+
+.btn-primary {
+  background-color: #31465f;
+  border-color: #31465f;
+}
+
+.btn-primary:hover {
+  background-color: #152939;
+  border-color: #152939;
+}
+
+.border-primary {
+  border-color: #007eb9!important;
+}
+
+.border-neutral {
+  border-color: #828282!important;
+}
+
+.text-primary {
+  color: #007eb9!important;
+}
+
+.text-neutral {
+  color: #828282!important;
 }

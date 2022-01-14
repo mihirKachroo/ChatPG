@@ -1,25 +1,59 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Auth } from 'aws-amplify';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import './bootstrap/css/bootstrap.min.css'
 import './App.css';
+import AppNav from './components/AppNav'
+import AppFooter from './components/AppFooter'
+import Home from './components/Home'
+import Chat from './components/Chat'
+import AuthContext from './AuthContext';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: null
+    };
+  }
+
+  componentDidMount() {
+    Auth.currentAuthenticatedUser().then(user => {
+      this.updateCurrentUser(user)
+    });
+  }
+
+  updateCurrentUser = (user) => {
+    this.setState({
+      currentUser: user
+    })
+  }
+
+  onSignOut = async () => {
+    await Auth.signOut();
+    this.setState({
+      currentUser: null
+    })
+  }
+
+  render() {
+    return (
+      <AuthContext.Provider value={this.state.currentUser}>
+        <Router>
+          <div className="App">
+            <AppNav loggedInUser={this.state.currentUser} onSignOut={this.onSignOut} />
+            <Route
+              exact
+              path="/"
+              render={() => <Home onLogin={this.updateCurrentUser} />}
+            />
+            <Route path="/chat" component={Chat} />
+          </div>
+        </Router>
+      </AuthContext.Provider>
+    );
+  }
 }
 
 export default App;

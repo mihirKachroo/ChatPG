@@ -21,6 +21,7 @@ type Conversation
   id: ID!
   messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")
   associated: [ConvoLink] @connection(name: "AssociatedLinks")
+  isSeen: Int
   name: String!
   members: [String!]!
   createdAt: String
@@ -33,18 +34,11 @@ type Message @model(subscriptions: null, queries: null) {
   authorId: String
   recieverId: String
   content: String!
-  file: S3Object
   conversation: Conversation
     @connection(name: "ConvoMsgs", sortField: "createdAt")
   messageConversationId: ID!
   createdAt: String
   updatedAt: String
-}
-
-type S3Object {
-  bucket: String!
-  key: String!
-  region: String!
 }
 
 type ConvoLink

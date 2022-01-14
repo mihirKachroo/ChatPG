@@ -1,0 +1,19 @@
+import * as queries from './graphql/queries';
+import { graphqlOperation, API } from 'aws-amplify';
+
+const assertErrors = (response) => {
+    if (response && response.errors && response.errors.length > 0) {
+        throw new Error(response.errors.join('\n'))
+    }
+}
+
+export const getUser = async (username: string) => {
+    try {
+        const response = await API.graphql(
+            graphqlOperation(queries.GetUser, { id: username })
+        );
+        assertErrors(response);
+        return response.data.getUser;
+    } catch (e) {
+    }
+}
