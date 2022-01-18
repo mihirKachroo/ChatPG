@@ -28,24 +28,6 @@ html {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.chat-message-view-header {
-  background-color: #cfcfcf;
-  padding-top: 17px;
-  padding-bottom: 18px;
-  font-weight: bold;
-  text-align: center;
-  margin: 0 -15px 10px -15px;
-}
-
 .btn-primary {
   background-color: #31465f;
   border-color: #31465f;

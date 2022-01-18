@@ -53,7 +53,7 @@ class ChatMessageView extends Component {
                                         try {
                                             prev.getConvo.messages.items.push(onCreateMessage);
                                         } catch (e) {
-                                            console.log('Failed to merge user conversation subscription');
+                                            console.log(e)
                                         }
                                         return prev;
                                     }}

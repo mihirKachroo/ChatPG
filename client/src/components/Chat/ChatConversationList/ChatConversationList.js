@@ -74,14 +74,13 @@ class ChatConversationList extends Component {
                                         try {
                                             prev.getUser.conversations.items.push(onCreateConvoLink);
                                         } catch (e) {
-                                            console.log('Failed to merge user conversation subscription');
+                                            console.log(e);
                                         }
                                         return prev;
                                     }}
                                 >
                                     {({ data, loading, error }) => {
                                         const { getUser } = data || { getUser: { conversations: [] } }
-                                        if (error) return (<h3>Error: {error}</h3>);
                                         let userConversations;
                                         try {
                                             userConversations = getUser.conversations.items;
