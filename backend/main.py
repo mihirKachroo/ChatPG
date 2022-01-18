@@ -1,53 +1,19 @@
-# have red flags and warnings
-#   Red flags would be bad words
-#   Warnings would be pronouns (say like don't assume pronouns)
+#-----------------------------------------------------------------------------
+# Name:        WokeTalk Scan Message Algorithm
+# Purpose:     Flags message for discriminatory language
+#
+# References: 	This program uses the NumPy/SciPy style of documentation as found
+#				here: https://numpydoc.readthedocs.io/en/latest/format.html with
+#				some minor modifications based on Python 3 function annotations
+#				(the -> notation).
+#
+# Author:      Mihir Kachroo
+# Created:     18-Jan-2022
+#-----------------------------------------------------------------------------
 
-# try not to use pronouns
-
-
-import csv
+import json
 import pickle
 import re
-
-# Racism
-# Misogyny
-# Transphobia
-# Homophobia
-# Antisemitism
-# Bad words
-
-# output dict to file after reading once and sorting
-# Sort the data first
-# Search with binary search ----------------------------------
-
-# on sentence post request
-# return words that were flagged + why they was flagged + link to article
-
-
-def getFlagsListFromCSV():
-    flaggedWords = {}
-
-    with open('bannedWordsFile.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile)
-
-        for row in reader:
-            word, flag = row
-            flaggedWords[word.lower()] = flag
-            
-            # print(word, flag)
-
-    return flaggedWords
-
-def saveFlagList(dictionary):
-    with open('savedListOfFlags.pkl', 'wb') as f:
-        pickle.dump(dictionary, f)
-
-response = getFlagsListFromCSV()
-# print(response)
-saveFlagList(response)
-
-# -------------------------------------------------------------------------------------
-
 
 def getFlagDict():
     with open('savedListOfFlags.pkl', 'rb') as f:
@@ -55,19 +21,43 @@ def getFlagDict():
     return loadedList
 
 def getInfoAboutFlag(flag):
+    '''
+    Maps flag to information (description and url to get help link) about flag
+    
+    Parameters
+    ----------
+    flag : str
+      Flag character
+    
+    Returns
+    -------
+    Returns list with description about flag and url to article
+    '''
     flagInfo = {
-        'R': ['This word is offensive to certain racial/ethnic group.', 'https://www.ohrc.on.ca/en/racial-discrimination-race-and-racism-fact-sheet'],
-        'B': ['This word is vulgar/insulting and can cause emotional damage.', 'https://thebakerorange.com/27914/voices/cursing-negatively-affects-society/'],
-        'M': ['This word is discriminatory towards women.', 'https://www.nytimes.com/2019/03/08/style/misogyny-women-history-photographs.html'],
-        'T': ['This word is offensive to transgender people.', 'https://www.verywellhealth.com/transphobia-5077602'],
-        'H': ['This word expresses fear, discomfort or hatred towards LGBTQ+.', 'https://www.medicalnewstoday.com/articles/homophobia#internalized-homophobia'],
-        'A': ['This word is hostile to or prejudiced against Jewish people.', 'https://www.adl.org/anti-semitism'],
+        'R': ['is offensive to certain racial/ethnic group.', 'https://www.ohrc.on.ca/en/racial-discrimination-race-and-racism-fact-sheet'],
+        'B': ['is vulgar/insulting and can cause emotional damage.', 'https://thebakerorange.com/27914/voices/cursing-negatively-affects-society/'],
+        'M': ['is discriminatory towards women.', 'https://www.nytimes.com/2019/03/08/style/misogyny-women-history-photographs.html'],
+        'T': ['is offensive to transgender people.', 'https://www.verywellhealth.com/transphobia-5077602'],
+        'H': ['expresses fear, discomfort or hatred towards LGBTQ+.', 'https://www.medicalnewstoday.com/articles/homophobia#internalized-homophobia'],
+        'A': ['is hostile to or prejudiced against Jewish people.', 'https://www.adl.org/anti-semitism'],
         'P': ['Ensure you use the correct gender pronouns.', 'https://uwm.edu/lgbtrc/support/gender-pronouns/']
     }
     return flagInfo[flag]
 
 
 def transformFlagToName(flag):
+    '''
+    Returns full name of flag key
+    
+    Parameters
+    ----------
+    flag : str
+      Flag character
+    
+    Returns
+    -------
+    Returns full name of the flag character
+    '''
     if flag == 'R':
         return 'Racism'
     elif flag == 'M':
@@ -83,38 +73,69 @@ def transformFlagToName(flag):
         
     return 'Bad word'
 
-# return list of {flagName, flagDescription, flagUrl}
 def getFlagsInSentence(sentence):
+    '''
+    Gets all flagged words in sentence
+    
+    Parameters
+    ----------
+    sentence : str
+      Sentence the user entered in chat
+    
+    Returns
+    -------
+    Returns flags list in sentence
+    '''
+
     sentence = sentence.lower()
     flagDict = getFlagDict()
-    print('\n')
 
     # cleans sentence from punctuation and returns set of pure words
     cleanSentence = set(re.findall(r'[^\s!,.?":;0-9]+', sentence))
-    print(flagDict)
-    print(cleanSentence)
 
     flagsInSentence = []
 
     for word in cleanSentence:
         wordFlag = flagDict.get(word)
         if wordFlag != None:
-            flagInfo = getInfoAboutFlag(wordFlag)
             flagName = transformFlagToName(wordFlag)
+            flagInfo = getInfoAboutFlag(wordFlag)
 
             flagObject = {
                 'flagName': flagName,
-                'flagDescription': flagInfo[0],
+                'flagDescription': word + ' ' + flagInfo[0],
                 'flagInfoUrl': flagInfo[1]
             }
 
             flagsInSentence.append(flagObject)
 
-            print(word, wordFlag)
-            print(flagObject)
-    
     return flagsInSentence
 
-sentence = "This this is Bad, you abo." # lower sentence before sending
-flags = getFlagsInSentence(sentence)
-print(flags)
+
+def handler(event):
+    '''
+    Handles post request from woketalk webpage
+    
+    Parameters
+    ----------
+    event: object
+      Info about post request
+    
+    Returns
+    -------
+    Returns flags list in sentence
+    '''
+    body = json.loads(event['body'])
+    sentence = body['sentence']
+
+    flags = getFlagsInSentence(sentence)
+
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'body': json.dumps(flags)
+    }
