@@ -1,6 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+// subscription that acts when user is created
 export const OnCreateUser = `
     subscription OnCreateUser {
         onCreateUser {
@@ -10,7 +11,7 @@ export const OnCreateUser = `
         }
     }
 `
-
+// subscription that acts when conversation is created
 export const OnCreateUserConversation = `
   subscription OnCreateUserConversation($userId: ID!) {
     onCreateConvoLink(convoLinkUserId:$userId) {
@@ -24,7 +25,7 @@ export const OnCreateUserConversation = `
     }
   }
 `
-
+// subscription that acts when message is created
 export const OnCreateMessage = `
   subscription OnCreateMessage($conversationId: ID!) {
     onCreateMessage(messageConversationId: $conversationId) {

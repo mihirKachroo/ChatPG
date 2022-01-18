@@ -37,17 +37,10 @@ html {
   }
 }
 
-.section-header {
-  background-color: #e6e6e6;
-  padding: 15px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .chat-message-view-header {
-  background-color: #e6e6e6;
-  padding-top: 13px;
-  padding-bottom: 12px;
+  background-color: #cfcfcf;
+  padding-top: 17px;
+  padding-bottom: 18px;
   font-weight: bold;
   text-align: center;
   margin: 0 -15px 10px -15px;
@@ -64,17 +57,17 @@ html {
 }
 
 .border-primary {
-  border-color: #007eb9!important;
+  border-color: #007eb9 !important;
 }
 
 .border-neutral {
-  border-color: #828282!important;
+  border-color: #828282 !important;
 }
 
 .text-primary {
-  color: #007eb9!important;
+  color: #007eb9 !important;
 }
 
 .text-neutral {
-  color: #828282!important;
+  color: #828282 !important;
 }

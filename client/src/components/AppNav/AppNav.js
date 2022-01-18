@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import './AppNav.css';
 
-class AppNav extends Component {
+/**
+ * App navigation component for top of webpage
+ */
 
+class AppNav extends Component {
     render() {
-        console.log(this.props.location);
         if (this.props.location.pathname !== '/' && !this.props.loggedInUser) {
             return <Redirect to="/" />
         } else if (this.props.location.pathname === '/' && this.props.loggedInUser) {
@@ -14,16 +16,14 @@ class AppNav extends Component {
         return (
             <nav className="navbar navbar-primary fixed-top">
                 <a className="navbar-brand text-white" href='/'>
-                    <strong>WokeTalk In Sandbox</strong>
+                    <strong>WokeTalk</strong>
                 </a>
                 <ul className="nav navbar-nav">
-                    {
-                        this.props.loggedInUser ?
-                            <li className="nav-item">
-                                <span className="nav-user">{this.props.loggedInUser.attributes.email}</span>
-                                <button className="btn btn-primary" onClick={this.props.onSignOut}>Sign Out <i className="ion-log-in" data-pack="default" data-tags="sign in"></i></button>
-                            </li> :
-                            null
+                    {this.props.loggedInUser &&
+                        <li className="nav-item">
+                            <span className="nav-user">{this.props.loggedInUser.attributes.email}</span>
+                            <button className="btn btn-primary" onClick={this.props.onSignOut}>Log Out</button>
+                        </li>
                     }
                 </ul>
             </nav>

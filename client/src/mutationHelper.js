@@ -21,7 +21,9 @@ export const createUser = async (user) => {
 export const createConvo = async (user1, user2) => {
     try {
         const members = [user1, user2].sort()
+        console.log('creating convos')
         const conversationName = members.join(' and ');
+        console.log(members, conversationName)
         const conversationResponse = await API.graphql(
             graphqlOperation(
                 mutations.CreateConvo, {
@@ -32,6 +34,7 @@ export const createConvo = async (user1, user2) => {
             }
             )
         );
+        console.log(conversationResponse)
         assertErrors(conversationResponse);
         const userConversation1Response = await API.graphql(
             graphqlOperation(
@@ -43,6 +46,7 @@ export const createConvo = async (user1, user2) => {
             }
             )
         );
+        console.log(userConversation1Response)
         assertErrors(userConversation1Response);
         const userConversation2Response = await API.graphql(
             graphqlOperation(
@@ -54,6 +58,7 @@ export const createConvo = async (user1, user2) => {
             }
             )
         );
+        console.log(userConversation2Response)
         assertErrors(userConversation2Response);
     } catch (e) {
     }

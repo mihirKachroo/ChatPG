@@ -5,8 +5,13 @@ import AuthContext from '../../../AuthContext';
 import * as queries from '../../../graphql/queries';
 import * as subscriptions from '../../../graphql/subscriptions';
 import './ChatMessageView.css';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ChatMessage from './ChatMessage';
 import { graphqlOperation } from 'aws-amplify';
+
+/**
+ * Chat message view component to see scrollable list of messages
+ */
 
 class ChatMessageView extends Component {
     static contextType = AuthContext;
@@ -19,21 +24,7 @@ class ChatMessageView extends Component {
         }
     }
 
-    componentDidMount = () => {
-        this.scrollToBottom();
-    }
-
     componentDidUpdate = async () => {
-        // console.log('mounted')
-        // console.log(this.context, this.props.conversation)
-        // const quer = await API.graphql(
-        //     graphqlOperation(queries.GetConvo, {
-        //         id: this.props.conversation.id,
-        //     })
-        // );
-        // console.log('message quer')
-        // console.log(quer)
-
         this.scrollToBottom();
     }
 
@@ -42,7 +33,7 @@ class ChatMessageView extends Component {
         return (
             <div className="chat-message-view">
                 <div className="chat-message-view-header">
-                    {this.props.conversation ? this.props.conversation.name : 'Select a conversation'}
+                    {this.props.conversation ? this.props.conversation.name.replace(' and ', '').replace(username, '') : 'Open a conversation'}
                 </div>
                 <div className="chat" ref={this.messagesContainer}>
                     {
@@ -76,7 +67,7 @@ class ChatMessageView extends Component {
                                         } catch (e) {
                                             messages = [];
                                         }
-                                        if (loading || !messages) return (<h3>Loading...</h3>);
+                                        if (loading || !messages) return (<CircularProgress />);
                                         return <div>
                                             {
                                                 messages.map((message, i) => (

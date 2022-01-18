@@ -3,11 +3,14 @@ import { Auth } from 'aws-amplify';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './bootstrap/css/bootstrap.min.css'
 import './App.css';
-import AppNav from './components/AppNav'
-import AppFooter from './components/AppFooter'
-import Home from './components/Home'
-import Chat from './components/Chat'
+import AppNav from './components/AppNav/AppNav.js'
+import Home from './components/Home/Home.js'
+import Chat from './components/Chat/Chat.js'
 import AuthContext from './AuthContext';
+
+/**
+ * Routes webpage to authentication, landing page and chat page
+ */
 
 class App extends Component {
 

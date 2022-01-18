@@ -1,29 +1,30 @@
 .list-group-item.active {
-    z-index: 2;
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-    background-color: gray !important;
+  z-index: 2;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  background-color: gray !important;
 }
 
 .convo-list {
-    height: auto;
-    max-height: 40vh !important;
-    /* max-height: 196px !important; */
-    overflow-x: hidden !important;
-    overflow-y: auto;
+  height: auto;
+  max-height: 80vh !important;
+  text-align: left;
+  /* max-height: 196px !important; */
+  overflow-x: hidden !important;
+  overflow-y: auto;
 }
 
 .bg {
-    background-color: #e4e7eb;
+  background-color: #e4e7eb;
 }
 
 .list-group-item {
-    background-color: white;
+  background-color: white;
 }
 
 .list-group-item:hover {
-    color: rgb(73, 80, 87)!important;
-    background-color: #e6e6e6!important;
-    border-radius: 0;
+  color: rgb(73, 80, 87) !important;
+  background-color: #cfcfcf !important;
+  border-radius: 0;
 }
