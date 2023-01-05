@@ -6,8 +6,8 @@ Chat to educate people on subconscious discriminatory tones in their texts
 ## Getting started
 - Contact dev team for environment variables
 - Clone the project and install dependencies:
-- run npm i on your terminal
-- run npm start
+- run ```npm install```
+- run ```npm start```
 
 ## Built With
 
