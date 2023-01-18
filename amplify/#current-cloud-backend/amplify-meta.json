@@ -1,0 +1,126 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-woketalk-dev-184056-authRole",
+      "UnauthRoleArn": "arn:aws:iam::463431781154:role/amplify-woketalk-dev-184056-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::463431781154:role/amplify-woketalk-dev-184056-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-woketalk-dev-184056-deployment",
+      "UnauthRoleName": "amplify-woketalk-dev-184056-unauthRole",
+      "StackName": "amplify-woketalk-dev-184056",
+      "StackId": "arn:aws:cloudformation:us-east-1:463431781154:stack/amplify-woketalk-dev-184056/9880e790-71a5-11ec-86c2-0ada3bf3a3c9",
+      "AmplifyAppId": "d25571y6zfxk66"
+    }
+  },
+  "auth": {
+    "woketalk6a5360d9": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "output": {
+        "UserPoolId": "us-east-1_9lwlLkJDo",
+        "AppClientIDWeb": "8oqrg3589nrdfa6mj2s8dbgn9",
+        "AppClientID": "2cvlir0c2vbcaeuuqdc6eeac95",
+        "IdentityPoolId": "us-east-1:2420a3bf-3918-4d26-a093-c6359c27ff7b",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:463431781154:userpool/us-east-1_9lwlLkJDo",
+        "IdentityPoolName": "woketalk6a5360d9_identitypool_6a5360d9__dev",
+        "UserPoolName": "woketalk6a5360d9_userpool_6a5360d9"
+      },
+      "lastPushTimeStamp": "2022-01-18T16:24:03.959Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-woketalk-dev-184056-deployment/amplify-cfn-templates/auth/woketalk6a5360d9-cloudformation-template.yml",
+        "logicalId": "authwoketalk6a5360d9"
+      }
+    }
+  },
+  "api": {
+    "woketalk": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authwoketalk6a5360d9"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "sxxcmf34n5au5lkuct5e6zx2ii",
+        "GraphQLAPIEndpointOutput": "https://nw33vrk6erawrdehnh6ckhd3j4.appsync-api.us-east-1.amazonaws.com/graphql"
+      },
+      "lastPushTimeStamp": "2022-01-18T16:24:03.968Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-woketalk-dev-184056-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiwoketalk"
+      }
+    },
+    "scanmessageapi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "scanmessagefunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-woketalk-dev-184056-deployment/amplify-cfn-templates/api/scanmessageapi-cloudformation-template.json",
+        "logicalId": "apiscanmessageapi"
+      },
+      "lastPushTimeStamp": "2022-01-18T16:24:03.995Z",
+      "output": {
+        "ApiName": "scanmessageapi",
+        "RootUrl": "https://yseaqgjxxf.execute-api.us-east-1.amazonaws.com/dev",
+        "ApiId": "yseaqgjxxf"
+      },
+      "lastPushDirHash": "wH941PQiqJzpl1Ym/seKocV7AlY="
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual",
+      "output": {},
+      "lastPushTimeStamp": "2022-01-18T16:24:04.012Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-woketalk-dev-184056-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
+        "logicalId": "hostingamplifyhosting"
+      }
+    }
+  },
+  "function": {
+    "scanmessagefunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [],
+      "lastBuildTimeStamp": "2022-01-18T16:22:16.375Z",
+      "lastPackageTimeStamp": "2022-01-18T16:22:26.279Z",
+      "distZipFilename": "scanmessagefunction-6d312f76766845307030-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-woketalk-dev-184056-deployment",
+        "s3Key": "amplify-builds/scanmessagefunction-6d312f76766845307030-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-woketalk-dev-184056-deployment/amplify-cfn-templates/function/scanmessagefunction-cloudformation-template.json",
+        "logicalId": "functionscanmessagefunction"
+      },
+      "lastPushTimeStamp": "2022-01-18T16:24:04.081Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:463431781154:function:scanmessagefunction-dev",
+        "Name": "scanmessagefunction-dev",
+        "LambdaExecutionRole": "woketalkLambdaRole0da6a28a-dev"
+      },
+      "lastPushDirHash": "xB7YjMzLSvEIa+ZUMOSCr01VsNc="
+    }
+  }
+}

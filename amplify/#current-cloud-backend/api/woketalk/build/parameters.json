@@ -1,0 +1,14 @@
+{
+    "CreateAPIKey": 0,
+    "AppSyncApiName": "woketalk",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authwoketalk6a5360d9",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-woketalk-dev-184056-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/f0ef926898d558ea3fee78b4e84c33d904dfc3b6"
+}

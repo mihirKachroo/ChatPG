@@ -14,11 +14,30 @@
 import json
 import pickle
 import re
+import pkg_resources
+import numpy as np
+import joblib
+
+
+def loadModel():
+    vectorizer = joblib.load(pkg_resources.resource_filename('profanity_check', 'data/vectorizer.joblib'))
+    model = joblib.load(pkg_resources.resource_filename('profanity_check', 'data/model.joblib'))
+
+def getProb(prob):
+  return prob[1]
+
+def predict(texts):
+  return model.predict(vectorizer.transform(texts))
+
+def predicProb(texts):
+  return np.apply_along_axis(_get_profane_prob, 1, model.predict_proba(vectorizer.transform(texts)))
+
 
 def getFlagDict():
     with open('savedListOfFlags.pkl', 'rb') as f:
         loadedList = pickle.load(f)
     return loadedList
+
 
 def getInfoAboutFlag(flag):
     '''
