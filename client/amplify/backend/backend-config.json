@@ -1,56 +1,90 @@
 {
-  "auth": {
-    "woketalk6a5360d9": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    }
-  },
   "api": {
-    "woketalk": {
-      "service": "AppSync",
+    "scanmessageapi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "scanmessagefunction"
+        }
+      ],
       "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "woketalk": {
       "output": {
         "authConfig": {
+          "additionalAuthenticationProviders": [],
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
               "userPoolId": "authwoketalk6a5360d9"
             }
-          },
-          "additionalAuthenticationProviders": []
+          }
         }
-      }
-    },
-    "scanmessageapi": {
-      "service": "API Gateway",
+      },
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "scanmessagefunction",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
+      "service": "AppSync"
     }
   },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
+  "auth": {
+    "woketalk6a5360d9": {
+      "customAuth": false,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "type": "manual"
+      "service": "Cognito"
     }
   },
   "function": {
     "scanmessagefunction": {
       "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
+      "service": "Lambda"
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
+      "type": "manual"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_scanmessagefunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "scanmessagefunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_scanmessagefunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "scanmessagefunction"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
     }
   }
 }

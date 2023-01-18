@@ -1,16 +1,3 @@
-#-----------------------------------------------------------------------------
-# Name:        WokeTalk Scan Message Algorithm
-# Purpose:     Flags message for discriminatory language
-#
-# References: 	This program uses the NumPy/SciPy style of documentation as found
-#				here: https://numpydoc.readthedocs.io/en/latest/format.html with
-#				some minor modifications based on Python 3 function annotations
-#				(the -> notation).
-#
-# Author:      Mihir Kachroo
-# Created:     18-Jan-2022
-#-----------------------------------------------------------------------------
-
 import json
 import pickle
 import re
@@ -21,18 +8,6 @@ def getFlagDict():
     return loadedList
 
 def getInfoAboutFlag(flag):
-    '''
-    Maps flag to information (description and url to get help link) about flag
-    
-    Parameters
-    ----------
-    flag : str
-      Flag character
-    
-    Returns
-    -------
-    Returns list with description about flag and url to article
-    '''
     flagInfo = {
         'R': ['is offensive to certain racial/ethnic group.', 'https://www.ohrc.on.ca/en/racial-discrimination-race-and-racism-fact-sheet'],
         'B': ['is vulgar/insulting and can cause emotional damage.', 'https://thebakerorange.com/27914/voices/cursing-negatively-affects-society/'],
@@ -46,18 +21,6 @@ def getInfoAboutFlag(flag):
 
 
 def transformFlagToName(flag):
-    '''
-    Returns full name of flag key
-    
-    Parameters
-    ----------
-    flag : str
-      Flag character
-    
-    Returns
-    -------
-    Returns full name of the flag character
-    '''
     if flag == 'R':
         return 'Racism'
     elif flag == 'M':
@@ -74,24 +37,13 @@ def transformFlagToName(flag):
     return 'Bad word'
 
 def getFlagsInSentence(sentence):
-    '''
-    Gets all flagged words in sentence
-    
-    Parameters
-    ----------
-    sentence : str
-      Sentence the user entered in chat
-    
-    Returns
-    -------
-    Returns flags list in sentence
-    '''
-
     sentence = sentence.lower()
     flagDict = getFlagDict()
 
     # cleans sentence from punctuation and returns set of pure words
     cleanSentence = set(re.findall(r'[^\s!,.?":;0-9]+', sentence))
+    print(flagDict)
+    print(cleanSentence)
 
     flagsInSentence = []
 
@@ -109,26 +61,23 @@ def getFlagsInSentence(sentence):
 
             flagsInSentence.append(flagObject)
 
+            print(word, wordFlag)
+            print(flagObject)
+    
     return flagsInSentence
 
 
-def handler(event):
-    '''
-    Handles post request from woketalk webpage
-    
-    Parameters
-    ----------
-    event: object
-      Info about post request
-    
-    Returns
-    -------
-    Returns flags list in sentence
-    '''
+def handler(event, context):
+    print('received event:')
+    print(event)
+    # body = event['body']
     body = json.loads(event['body'])
     sentence = body['sentence']
+    print(sentence)
 
     flags = getFlagsInSentence(sentence)
+    print('here are flags')
+    print(flags)
 
     return {
         'statusCode': 200,

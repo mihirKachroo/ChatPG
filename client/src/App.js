@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import './bootstrap/css/bootstrap.min.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import AppNav from './components/AppNav/AppNav.js'
 import Home from './components/Home/Home.js'

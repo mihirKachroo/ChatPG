@@ -23,7 +23,7 @@ class Home extends Component {
         return (
             <div className="container home card bg-light">
                 <div className="card-body">
-                    <h1 className="card-title display-4 text-center">WokeTalk</h1>
+                    <h1 className="card-title display-4 text-center">ChatPG</h1>
                     <p className="home-subtitle display-4 text-center">Chat to educate people on subconscious discriminatory tones in their texts</p>
                     <Authenticator
                         onStateChange={this.handleAuthStateChange}
