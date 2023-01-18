@@ -24,7 +24,7 @@ class Home extends Component {
             <div className="container home card bg-light">
                 <div className="card-body">
                     <h1 className="card-title display-4 text-center">ChatPG</h1>
-                    <p className="home-subtitle display-4 text-center">Chat to educate people on subconscious discriminatory tones in their texts</p>
+                    <p className="home-subtitle display-4 text-center">Real-time messaging app that keeps conversations PG-13 by censoring messages before they are sen</p>
                     <Authenticator
                         onStateChange={this.handleAuthStateChange}
                         amplifyConfig={awsExports}
