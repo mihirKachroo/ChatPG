@@ -1,5 +1,5 @@
-# WokeTalk
-Chat to educate people on subconscious discriminatory tones in their texts
+# ChatPG
+Chat that censors bad language
 
 [View Live](https://dev.d25571y6zfxk66.amplifyapp.com/)
 
