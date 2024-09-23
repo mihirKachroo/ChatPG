@@ -1,7 +1,5 @@
 # ChatPG
-Chat that censors bad language
-
-[View Live](https://dev.d25571y6zfxk66.amplifyapp.com/)
+Chat that applies AI sentiment analysis and an in-built prefix trie with blacklisted words to sanitize messages in real-time
 
 
 ## Getting started
